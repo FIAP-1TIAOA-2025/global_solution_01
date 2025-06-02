@@ -1,0 +1,97 @@
+{
+    "1": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-braz-1",
+        "activationId": ""
+    },
+    "2": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/floods-in-brazil-belo-horizonte-campos-dos-goitacazes",
+        "activationId": ""
+    },
+    "3": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-north-region-of-brazil",
+        "activationId": ""
+    },
+    "4": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-and-landslide-in-brazil",
+        "activationId": ""
+    },
+    "5": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-brazil",
+        "activationId": ""
+    },
+    "6": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-braz-2",
+        "activationId": ""
+    },
+    "7": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-braz-3",
+        "activationId": ""
+    },
+    "8": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-brazil-activation-595-",
+        "activationId": "activation-595"
+    },
+    "9": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-flash-in-brazil-activation-642-",
+        "activationId": "activation-642"
+    },
+    "10": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-large-in-brazil-activation-742-",
+        "activationId": "activation-742"
+    },
+    "11": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-flash-in-brazil-activation-751-",
+        "activationId": "activation-751"
+    },
+    "12": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-large-in-brazil-activation-754-",
+        "activationId": "activation-754"
+    },
+    "13": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/landslide-in-brazil-activation-758-",
+        "activationId": "activation-758"
+    },
+    "14": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/landslide-in-brazil-activation-803-",
+        "activationId": "activation-803"
+    },
+    "15": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-large-in-brazil-activation-815-",
+        "activationId": "activation-815"
+    },
+    "16": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-flash-in-brazil-activation-837-",
+        "activationId": "activation-837"
+    },
+    "17": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-large-in-brazil-activation-851-",
+        "activationId": "activation-851"
+    },
+    "18": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-brazil-activation-865-",
+        "activationId": "activation-865"
+    },
+    "19": {
+        "baseUrl": "https://disasterscharter.org",
+        "event": "/activations/flood-in-brazil-activation-875-",
+        "activationId": "activation-875"
+    }
+}
