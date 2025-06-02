@@ -12,9 +12,9 @@ import csv
 
 # --- CONFIGURATION ---
 BASE = "https://disasterscharter.org"
-EVENT = "activation-754"
-PAGE = f"{BASE}/activations/flood-large-in-brazil-{EVENT}-"
-OUTPUT_DIR = f"./data/raw/{EVENT}"
+EVENT = None
+PAGE = f"{BASE}/activations/flood-in-braz-1{EVENT and "-"}"
+OUTPUT_DIR = f"./data/raw/{EVENT or 'flood-in-braz-1'}"
 
 # create output directory
 os.makedirs(OUTPUT_DIR, exist_ok=True)
