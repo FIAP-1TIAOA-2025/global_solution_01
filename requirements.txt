@@ -1,0 +1,8 @@
+selenium
+webdriver-manager
+beautifulsoup4
+pandas
+openmeteo-requests
+requests-cache
+retry-requests
+pymongo

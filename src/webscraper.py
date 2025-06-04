@@ -1,20 +1,16 @@
 import os
 import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
-import requests
-from urllib.parse import urljoin
 import csv
 
 # --- CONFIGURATION ---
 BASE = "https://disasterscharter.org"
-EVENT = None
-PAGE = f"{BASE}/activations/flood-in-braz-1{EVENT and "-"}"
-OUTPUT_DIR = f"./data/raw/{EVENT or 'flood-in-braz-1'}"
+PAGE = f"{BASE}/activations/flood-in-brazil-activation-875-"
+OUTPUT_DIR = f"./data/raw/flood-in-brazil"
 
 # create output directory
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -30,14 +26,6 @@ driver.get(PAGE)
 
 # Espera a página carregar
 time.sleep(3)
-
-# Tenta clicar no botão "Load all products"
-try:
-    load_btn = driver.find_element(By.XPATH, "//button[contains(., 'Load all products')]")
-    load_btn.click()
-    time.sleep(10)  # Aguarda carregar os produtos
-except Exception as e:
-    print("*** Botão 'Load all products' não encontrado ou erro ao clicar: ***", e)
 
 # Pega o HTML após carregar tudo
 soup = BeautifulSoup(driver.page_source, "html.parser")
@@ -93,26 +81,3 @@ if dl_tag:
         print("Quantidade de <dt> e <dd> não bate, não foi possível salvar como CSV.")
 else:
     print("Elemento <dl> não encontrado.")
-
-# --- DOWNLOAD DAS IMAGENS ---
-img_tags = soup.select("picture img[src]")
-downloaded = set()
-for img in img_tags:
-    src = img["src"]
-    if "/_next/image?url=" in src:
-        full_url = urljoin(BASE, src)
-        if full_url in downloaded:
-            continue
-        downloaded.add(full_url)
-        print(f"Downloading {full_url}...")
-        r = requests.get(full_url, headers={"User-Agent": "ImageScraper/1.0"})
-        r.raise_for_status()
-        # Usa timestamp para nome único
-        fname = f"{int(time.time() * 1000)}.jpeg"
-        path = os.path.join(OUTPUT_DIR, fname)
-        with open(path, "wb") as f:
-            f.write(r.content)
-        print(f"→ saved as {path}")
-        time.sleep(0.01)  # Garante nomes diferentes mesmo em execuções rápidas
-
-print(f"Done: {len(downloaded)} images saved in ./{OUTPUT_DIR}/")
