@@ -6,7 +6,7 @@ Este projeto é uma POC (Proof Of Concept) que visa desenvolver um modelo de Int
 
 ## 🚀 Visão Geral do Projeto
 
-Inundações são desastres naturais recorrentes em muitas cidades costeiras e tropicais, como Salvador. Prever esses eventos com antecedência pode salvar vidas e reduzir danos materiais. Este projeto explora o uso de técnicas de Machine Learning, especificamente com Python e Scikit-learn, para identificar padrões em dados climáticos que precedem inundações.
+Inundações são desastres naturais recorrentes em muitas cidades costeiras e tropicais, como Porto Alegre. Prever esses eventos com antecedência pode salvar vidas e reduzir danos materiais. Este projeto explora o uso de técnicas de Machine Learning, especificamente com Python e Scikit-learn, para identificar padrões em dados climáticos que precedem inundações.
 
 O pipeline do projeto segue uma abordagem de ciência de dados estruturada:
 

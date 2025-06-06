@@ -10,12 +10,12 @@ def main():
     # 1. Load Data
     print("Loading raw data...")
     # Assume load_raw_data returns a dictionary of dataframes or merges them
-    raw_df = load_raw_data()
+    load_raw_data()
     print("Raw data loaded.")
 
     # 2. Preprocess and Feature Engineer
     print("Preprocessing and engineering features...")
-    processed_df = clean_and_engineer_features(raw_df)
+    processed_df = clean_and_engineer_features()
     print("Features engineered.")
 
     # 3. Train Model

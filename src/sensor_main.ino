@@ -23,7 +23,7 @@ void loop() {
   long distance = duration * 0.0343 / 2;
 
   if (distance < 300) {
-    Serial.println("ALERTA: Distância menor que 300 cm!");
+    Serial.println("ALERTA: Nível de água alto! Risco de enchente!");
   }
 
   delay(1000); // Mede a cada 1 segundo
