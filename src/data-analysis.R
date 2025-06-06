@@ -1,10 +1,11 @@
+install.packages("mongolite", repos = "https://cloud.r-project.org")
 # --- PASSO 0: Preparação Inicial ---
 
 # Instalar pacotes essenciais (se ainda não tiver feito)
-# install.packages("dplyr") # Para manipulação de dados [9, 10]
-# install.packages("tidyr") # Útil para organizar dados [10, 11]
-# install.packages("ggplot2") # Para visualização de dados [1, 12]
-# install.packages("DescTools") # Para calcular a Moda [13]
+install.packages("dplyr", repos = "https://cloud.r-project.org") # Para manipulação de dados [9, 10]
+install.packages("tidyr", repos = "https://cloud.r-project.org") # Útil para organizar dados [10, 11]
+install.packages("ggplot2", repos = "https://cloud.r-project.org") # Para visualização de dados [1, 12]
+install.packages("DescTools", repos = "https://cloud.r-project.org") # Para calcular a Moda [13]
 
 # Carregar os pacotes
 library(dplyr)
@@ -12,19 +13,22 @@ library(tidyr)
 library(ggplot2)
 library(DescTools) # Pode ser necessário carregar para usar a função Mode [13]
 
-# Carregar seus dados para um dataframe no R.
-# Assumindo que seus dados estão em um arquivo CSV chamado "dados_climaticos.csv"
-# Se estiverem em outro formato, ajuste a função de leitura (ex: read.xlsx para Excel)
-# Certifique-se de que o arquivo está no diretório de trabalho ou forneça o caminho completo.
-df_clima <- read.csv("dados_climaticos.csv")
+library(mongolite)
 
-# Visualizar as primeiras linhas para verificar se carregou corretamente
+# Substitua pela sua string de conexão e nome da coleção/database
+mongo_url <- "mongodb://localhost:27017/"
+con <- mongo(collection = "daily", db = "global_solution_weather_data_raw", url = mongo_url)
+
+# Ler todos os dados da coleção para um dataframe
+df_clima <- con$find()
+
+# Visualizar os dados
 head(df_clima)
 
 # Verificar a estrutura dos dados
 str(df_clima)
-1. Limpeza e Pré-processamento dos Dados
-Esta etapa é crucial para garantir que os dados estejam prontos para análise e modelagem. O primeiro passo é lidar com valores ausentes, que em R são frequentemente representados como NA.
+# 1. Limpeza e Pré-processamento dos Dados
+# Esta etapa é crucial para garantir que os dados estejam prontos para análise e modelagem. O primeiro passo é lidar com valores ausentes, que em R são frequentemente representados como NA.
 # --- PASSO 1: Limpeza e Pré-processamento ---
 
 # 1.1 Identificar e Contar Valores Ausentes [14, 15]
@@ -60,8 +64,8 @@ df_clima_trabalho <- df_clima # Criar uma cópia para trabalhar
 # unique() para obter linhas únicas
 # Código para corrigir erros específicos dependeria da natureza dos erros.
 
-2. Análise Descritiva de Dados
-Esta análise fornecerá uma visão geral das suas variáveis climáticas. Você calculará medidas de tendência central, dispersão e posição.
+# 2. Análise Descritiva de Dados
+# Esta análise fornecerá uma visão geral das suas variáveis climáticas. Você calculará medidas de tendência central, dispersão e posição.
 # --- PASSO 2: Análise Descritiva de Dados ---
 
 # Vamos focar nas variáveis numéricas principais do seu dataset amostra:
@@ -78,11 +82,11 @@ for (coluna in variaveis_numericas) {
   media <- mean(df_clima_trabalho[[coluna]], na.rm = TRUE) # Ignorar NAs no cálculo
   mediana <- median(df_clima_trabalho[[coluna]], na.rm = TRUE) # Ignorar NAs no cálculo
   # Moda pode exigir o pacote DescTools e tem suas particularidades (pode haver múltiplas modas) [13]
-  # moda <- Mode(df_clima_trabalho[[coluna]], na.rm = TRUE)
+  moda <- Mode(df_clima_trabalho[[coluna]], na.rm = TRUE)
 
   cat("  Média:", media, "\n")
   cat("  Mediana:", mediana, "\n")
-  # cat("  Moda:", moda, "\n")
+  cat("  Moda:", moda, "\n")
 
   # Medidas de Dispersão [17, 18]
   amplitude <- diff(range(df_clima_trabalho[[coluna]], na.rm = TRUE)) # [18]
@@ -105,8 +109,8 @@ for (coluna in variaveis_numericas) {
 
 # Sumário estatístico completo (muito útil e rápido)
 # summary(df_clima_trabalho[variaveis_numericas]) # Mostra min, Q1, mediana, média, Q3, max e NAs
-3. Visualização de Dados
-A visualização é fundamental para explorar e comunicar padrões nos dados. Você pode visualizar a evolução das variáveis ao longo do tempo ou a distribuição dos seus valores. O pacote ggplot2 é recomendado para gráficos de alta qualidade.
+# 3. Visualização de Dados
+# A visualização é fundamental para explorar e comunicar padrões nos dados. Você pode visualizar a evolução das variáveis ao longo do tempo ou a distribuição dos seus valores. O pacote ggplot2 é recomendado para gráficos de alta qualidade.
 # --- PASSO 3: Visualização de Dados ---
 
 # Converter a coluna 'date' para formato de data/hora se ainda não estiver
@@ -124,7 +128,7 @@ ggplot(df_clima_trabalho, aes(x = date, y = temperature_2m_mean)) + # [12]
 
 # Exemplo 2: Série Temporal da Precipitação Total
 # Mostra a precipitação diária (ou acumulada no período do registro)
-ggplot(df_clima_trabalho, aes(x = date, y = precipitation_sum)) + [12]
+ggplot(df_clima_trabalho, aes(x = date, y = precipitation_sum)) + # [12]
   geom_line() +
   labs(title = "Precipitação Total ao Longo do Tempo",
        x = "Data",

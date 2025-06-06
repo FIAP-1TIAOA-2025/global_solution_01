@@ -6,3 +6,9 @@ openmeteo-requests
 requests-cache
 retry-requests
 pymongo
+numpy 
+matplotlib 
+seaborn
+scikit-learn
+scipy
+imbalanced-learn

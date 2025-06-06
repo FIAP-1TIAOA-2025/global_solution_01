@@ -29,3 +29,87 @@ Para todos estes exemplos, é crucial realizar o **pré-processamento dos dados*
 O uso do **Wokwi.com** pode ser uma etapa inicial útil para simular a interação do ESP32 com sensores antes de trabalhar com hardware físico. O desenvolvimento da lógica do sistema em C++ para o ESP32 e a integração com a aplicação Python (potencialmente via Wi-Fi) demonstrarão as habilidades multidisciplinares valorizadas.
 
 Em resumo, as possíveis soluções giram em torno da **coleta e integração de dados** (disasterscharter.org, sensores via ESP32), o **processamento e análise** desses dados utilizando **algoritmos de Machine Learning em Python (scikit-learn)**, e a criação de uma **lógica de sistema** (com estruturas condicionais e de repetição) para **prever, monitorar ou mitigar** eventos extremos.
+
+## 1. Instalar o MongoDB Localmente
+
+Primeiro, você precisa ter o servidor MongoDB rodando na sua máquina.
+
+Instalação:
+macOS: A maneira mais fácil é via Homebrew:
+
+```bash
+brew tap mongodb/brew
+brew install mongodb-community@7.0 # Use a versão que desejar (7.0 é a mais recente estável)
+```
+
+### Para iniciar o serviço (se quiser que rode em background)
+
+```bash
+brew services start mongodb-community@7.0
+```
+
+### Para iniciar manualmente e ver logs (no terminal atual)
+
+```bash
+mongod --port 27017 --dbpath /data/db # Por padrão, o dbpath é /data/db, mas pode ser outro
+```
+
+Windows: Baixe o instalador .msi do site oficial do MongoDB Community Edition. O instalador geralmente oferece a opção de instalar o MongoDB Compass (uma GUI útil) e configurar o MongoDB como um serviço do Windows.
+Site: https://www.mongodb.com/try/download/community
+Linux (Ubuntu/Debian):
+
+```bash
+sudo apt-get install mongodb-org # ou siga o guia oficial para a versão mais recente
+sudo systemctl start mongod
+sudo systemctl enable mongod # Para iniciar automaticamente no boot
+```
+
+Verifique a instalação: Após a instalação, abra um novo terminal e digite mongosh (ou mongo se estiver usando uma versão antiga). Se tudo estiver correto, você verá o prompt do shell MongoDB.
+Caminho dos Dados (dbpath): O MongoDB armazena seus dados em um diretório específico. Por padrão, em muitos sistemas Unix-like, é /data/db. Se esse diretório não existir ou você não tiver permissões, o mongod não iniciará. Você pode criar o diretório e definir as permissões ou especificar um caminho diferente com --dbpath.
+
+## Estrutura do Projeto:
+```
+flood_prediction_project/
+├── data/
+│   ├── raw/
+│   │   ├── climate_data_raw.csv   # Original downloaded data (never modify)
+│   │   ├── flood_events_raw.csv   # Raw flood records
+││   └── tidal_data_raw.csv     # Raw tide data
+│   ├── processed/
+│   │   └── merged_processed_data.csv # Cleaned, merged, and preprocessed data
+│   └── external/
+│       └── geospatial_data/       # e.g., shapefiles, DEMs, land use maps
+│           ├── salvador_dem.tif
+│           └── urban_drainage.shp
+│
+├── notebooks/
+│   ├── 01_eda_and_initial_analysis.ipynb # Exploratory Data Analysis, initial correlations
+│   ├── 02_feature_engineering_exploration.ipynb # Experiment with new features
+│   └── 03_model_experimentation.ipynb    # Test different ML algorithms
+│
+├── src/
+│   ├── __init__.py                # Makes 'src' a Python package
+│   ├── data_ingestion.py          # Script to download/load raw data
+│   ├── data_preprocessing.py      # Functions for cleaning, merging, feature engineering
+│   ├── model_training.py          # Script for model training (split, scale, train, tune)
+│   ├── model_evaluation.py        # Functions for evaluating model performance
+│   └── prediction_api.py          # (Optional) For serving predictions
+│
+├── models/
+│   ├── trained_models/
+│   │   ├── RandomForestClassifier_v1.pkl # Saved final model (e.g., using joblib)
+│   │   └── StandardScaler_v1.pkl       # Saved scaler
+│   └── checkpoints/                 # Interim model saves during hyperparameter tuning
+│
+├── reports/
+│   ├── figures/                   # Generated plots and charts
+│   │   ├── correlation_heatmap.png
+│   │   └── time_series_plot.png
+│   ├── final_report.md            # Markdown report summarizing findings
+│   └── model_performance_metrics.csv # Key metrics from final evaluation
+│
+├── .env                           # Environment variables (e.g., database connection strings)
+├── requirements.txt               # List of Python dependencies
+├── README.md                      # Project overview, setup instructions
+└── run_pipeline.py                # Main script to run the entire process end-to-end
+```
