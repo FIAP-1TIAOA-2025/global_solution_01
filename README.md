@@ -1,115 +1,164 @@
-# GLOBAL SOLUTION
+# Previsão de Inundações no Brasil (POC)
 
-Com base no desafio da Global Solution 2025.1 e nas informações fornecidas nos fontes, bem como em nossa conversa, diversas soluções digitais podem ser desenvolvidas para prever, monitorar ou mitigar o impacto de eventos naturais extremos. O desafio exige a utilização de dados reais, em particular do site disasterscharter.org, e a integração de conhecimentos em lógica, programação (especialmente Python para Machine Learning), e o uso de um ESP32 com pelo menos um sensor.
+Este projeto é uma POC (Proof Of Concept) que visa desenvolver um modelo de Inteligência Artificial para prever eventos de inundações utilizando dados climáticos e, potencialmente, dados hidrológicos e geográficos. O objetivo é fornecer uma ferramenta de alerta precoce que possa auxiliar na gestão de riscos e na proteção da população.
 
-Aqui estão algumas possíveis abordagens e soluções, considerando os requisitos e tecnologias mencionadas nos fontes:
+---
 
-1. **Sistemas de Monitoramento e Alerta Precoce Baseados em Sensores e Dados Históricos**:
-    * Uma solução pode focar no **monitoramento em tempo real** de condições ambientais relevantes para um evento extremo específico, como temperatura, umidade do solo, nível da água, ou vibrações.
-    * Utilizando um **ESP32 com um sensor** apropriado (por exemplo, um sensor de nível para inundações, um sensor de umidade para deslizamentos de terra), é possível coletar dados físicos e transformá-los em dados digitais.
-    * Esses dados de sensor podem ser integrados com **dados históricos e imagens de satélite** do disasterscharter.org, assim como outros dados ambientais de bases públicas, como dados meteorológicos.
-    * Um **modelo de Machine Learning em Python**, implementado com a biblioteca scikit-learn, pode ser treinado para **prever a probabilidade ou severidade** de um evento com base nesses dados. Tarefas como classificação para determinar níveis de risco ou regressão para prever valores como nível da água ou temperatura podem ser realizadas.
-    * A **lógica do sistema**, usando estruturas condicionais (if/else) e laços de repetição, pode analisar a saída do modelo de ML e os dados dos sensores para **disparar alertas automáticos** caso as condições de risco sejam atingidas. O ESP32 pode ser usado para ativar alertas locais (sonoros, visuais) ou enviar notificações.
-    * O **processamento de sinais** dos sensores pode ser essencial para minimizar ruídos e erros, garantindo a precisão dos dados utilizados pelo modelo de IA e pela lógica do sistema. Técnicas de filtragem digital usando bibliotecas Python como SciPy podem ser aplicadas.
+## 🚀 Visão Geral do Projeto
 
-2. **Plataformas de Suporte à Tomada de Decisão para Resposta a Desastres**:
-    * Uma solução pode criar uma **plataforma digital** que consolide dados de diversas fontes, incluindo disasterscharter.org, relatórios técnicos e, potencialmente, dados de sensores implantados em áreas de risco.
-    * Um sistema de IA pode ser desenvolvido em Python, utilizando scikit-learn, para **analisar os dados e fornecer insights** sobre a situação, como identificar áreas mais afetadas, prever a propagação de um evento (por exemplo, enchentes) ou estimar necessidades de recursos.
-    * A plataforma pode oferecer **visualizações** dos dados e das análises do modelo de IA.
-    * A **lógica do sistema** pode auxiliar na tomada de decisões, por exemplo, sugerindo rotas de evacuação seguras ou identificando comunidades isoladas com base nos dados analisados. Embora a plataforma principal rode em Python, a integração com um ESP32 poderia envolver a implantação de sensores em pontos estratégicos para fornecer dados adicionais em tempo real ou para ativar mecanismos de resposta local controlados pela plataforma.
+Inundações são desastres naturais recorrentes em muitas cidades costeiras e tropicais, como Salvador. Prever esses eventos com antecedência pode salvar vidas e reduzir danos materiais. Este projeto explora o uso de técnicas de Machine Learning, especificamente com Python e Scikit-learn, para identificar padrões em dados climáticos que precedem inundações.
 
-3. **Ferramentas de Análise Preditiva para Otimização de Recursos**:
-    * Com base em dados históricos de desastres do disasterscharter.org e outros dados relevantes (econômicos, de saúde, de infraestrutura), um modelo de ML em Python pode ser treinado para **prever o impacto** de diferentes tipos de eventos em diversas regiões.
-    * A solução poderia usar técnicas de **processamento de linguagem natural (PLN)** para analisar relatórios de desastres, ou **visão computacional** para analisar imagens de satélite.
-    * Um ESP32 com sensor poderia ser utilizado em uma prova de conceito para demonstrar como **dados locais em tempo real** (como danos estruturais via sensores de vibração, ou status de recursos via sensores de nível/fluxo) poderiam ser incorporados para refinar as previsões ou monitorar a eficácia das medidas de mitigação.
-    * A ferramenta de análise pode ajudar autoridades ou organizações de ajuda a **alocar recursos de forma mais eficiente**, prevendo onde e quando a ajuda será mais necessária, otimizando a logística e minimizando custos operacionais.
+O pipeline do projeto segue uma abordagem de ciência de dados estruturada:
 
-Para todos estes exemplos, é crucial realizar o **pré-processamento dos dados** utilizando as ferramentas do scikit-learn, como tratamento de valores ausentes ou codificação de variáveis categóricas. A **divisão adequada dos dados** em conjuntos de treino e teste, e a **avaliação do modelo** com métricas relevantes (como acurácia ou matriz de confusão), são etapas essenciais de acordo com a metodologia de projetos de ML.
+1. Coleta e Preparação de Dados: Aquisição de dados climáticos históricos, registros de inundações e outras informações relevantes.
+2. Análise Exploratória de Dados (EDA): Entendimento inicial dos dados, identificação de tendências, sazonalidade e problemas de qualidade.
+3. Engenharia de Features: Criação de variáveis mais informativas (ex: precipitação acumulada, lags) a partir dos dados brutos.
+4. Treinamento e Avaliação do Modelo: Seleção, treinamento e otimização de modelos de Machine Learning para prever inundações.
+5. Relatórios e Visualizações: Geração de gráficos e relatórios para comunicar insights e performance do modelo.
 
-O uso do **Wokwi.com** pode ser uma etapa inicial útil para simular a interação do ESP32 com sensores antes de trabalhar com hardware físico. O desenvolvimento da lógica do sistema em C++ para o ESP32 e a integração com a aplicação Python (potencialmente via Wi-Fi) demonstrarão as habilidades multidisciplinares valorizadas.
+---
 
-Em resumo, as possíveis soluções giram em torno da **coleta e integração de dados** (disasterscharter.org, sensores via ESP32), o **processamento e análise** desses dados utilizando **algoritmos de Machine Learning em Python (scikit-learn)**, e a criação de uma **lógica de sistema** (com estruturas condicionais e de repetição) para **prever, monitorar ou mitigar** eventos extremos.
+## 📂 Estrutura do Projeto
 
-## 1. Instalar o MongoDB Localmente
+A organização do projeto segue uma estrutura modular para facilitar o desenvolvimento, a manutenção e a colaboração:
 
-Primeiro, você precisa ter o servidor MongoDB rodando na sua máquina.
-
-Instalação:
-macOS: A maneira mais fácil é via Homebrew:
-
-```bash
-brew tap mongodb/brew
-brew install mongodb-community@7.0 # Use a versão que desejar (7.0 é a mais recente estável)
-```
-
-### Para iniciar o serviço (se quiser que rode em background)
-
-```bash
-brew services start mongodb-community@7.0
-```
-
-### Para iniciar manualmente e ver logs (no terminal atual)
-
-```bash
-mongod --port 27017 --dbpath /data/db # Por padrão, o dbpath é /data/db, mas pode ser outro
-```
-
-Windows: Baixe o instalador .msi do site oficial do MongoDB Community Edition. O instalador geralmente oferece a opção de instalar o MongoDB Compass (uma GUI útil) e configurar o MongoDB como um serviço do Windows.
-Site: https://www.mongodb.com/try/download/community
-Linux (Ubuntu/Debian):
-
-```bash
-sudo apt-get install mongodb-org # ou siga o guia oficial para a versão mais recente
-sudo systemctl start mongod
-sudo systemctl enable mongod # Para iniciar automaticamente no boot
-```
-
-Verifique a instalação: Após a instalação, abra um novo terminal e digite mongosh (ou mongo se estiver usando uma versão antiga). Se tudo estiver correto, você verá o prompt do shell MongoDB.
-Caminho dos Dados (dbpath): O MongoDB armazena seus dados em um diretório específico. Por padrão, em muitos sistemas Unix-like, é /data/db. Se esse diretório não existir ou você não tiver permissões, o mongod não iniciará. Você pode criar o diretório e definir as permissões ou especificar um caminho diferente com --dbpath.
-
-## Estrutura do Projeto:
-```
+```text
 flood_prediction_project/
 ├── data/
-│   ├── raw/
-│   │   ├── climate_data_raw.csv   # Original downloaded data (never modify)
-│   │   ├── flood_events_raw.csv   # Raw flood records
-││   └── tidal_data_raw.csv     # Raw tide data
-│   ├── processed/
-│   │   └── merged_processed_data.csv # Cleaned, merged, and preprocessed data
-│   └── external/
-│       └── geospatial_data/       # e.g., shapefiles, DEMs, land use maps
-│           ├── salvador_dem.tif
-│           └── urban_drainage.shp
+│   ├── raw/                 # Dados brutos originais (nunca modificados)
+│   └── processed/           # Dados limpos e com features engenheiradas, prontos para o modelo
 │
 ├── notebooks/
-│   ├── 01_eda_and_initial_analysis.ipynb # Exploratory Data Analysis, initial correlations
-│   ├── 02_feature_engineering_exploration.ipynb # Experiment with new features
-│   └── 03_model_experimentation.ipynb    # Test different ML algorithms
+│   ├── 01_eda_and_initial_analysis.ipynb # EDA e análise de correlação inicial
+│   ├── 02_feature_engineering_exploration.ipynb # Exploração e criação de features
+│   └── 03_model_experimentation.ipynb    # Treinamento e avaliação de modelos
 │
 ├── src/
-│   ├── __init__.py                # Makes 'src' a Python package
-│   ├── data_ingestion.py          # Script to download/load raw data
-│   ├── data_preprocessing.py      # Functions for cleaning, merging, feature engineering
-│   ├── model_training.py          # Script for model training (split, scale, train, tune)
-│   ├── model_evaluation.py        # Functions for evaluating model performance
-│   └── prediction_api.py          # (Optional) For serving predictions
+│   ├── data_ingestion.py    # Scripts para carregar/coletar dados brutos
+│   ├── data_preprocessing.py # Funções para limpeza e engenharia de features
+│   ├── model_training.py    # Lógica para treinamento e tuning do modelo
+│   ├── model_evaluation.py  # Funções para métricas e visualizações de avaliação
+│   └── prediction_api.py    # (Opcional) API para servir predições
 │
 ├── models/
-│   ├── trained_models/
-│   │   ├── RandomForestClassifier_v1.pkl # Saved final model (e.g., using joblib)
-│   │   └── StandardScaler_v1.pkl       # Saved scaler
-│   └── checkpoints/                 # Interim model saves during hyperparameter tuning
+│   ├── trained_models/      # Modelos treinados e scalers salvos
+│   └── checkpoints/         # Saves intermediários de modelos (se aplicável)
 │
 ├── reports/
-│   ├── figures/                   # Generated plots and charts
-│   │   ├── correlation_heatmap.png
-│   │   └── time_series_plot.png
-│   ├── final_report.md            # Markdown report summarizing findings
-│   └── model_performance_metrics.csv # Key metrics from final evaluation
+│   ├── figures/             # Gráficos e visualizações gerados
+│   ├── final_report.md      # Relatório final do projeto
+│   └── model_performance_metrics.csv # Métricas de performance do modelo final
 │
-├── .env                           # Environment variables (e.g., database connection strings)
-├── requirements.txt               # List of Python dependencies
-├── README.md                      # Project overview, setup instructions
-└── run_pipeline.py                # Main script to run the entire process end-to-end
+├── .env                     # Variáveis de ambiente (ex: credenciais, *NÃO comitar!*)
+├── requirements.txt         # Lista de dependências Python
+├── README.md                # Este arquivo
+└── run_pipeline.py          # Script principal para executar o pipeline completo
 ```
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- Python 3.x
+- Bibliotecas Python:
+  - pandas: Manipulação e análise de dados
+  - numpy: Computação numérica
+  - scikit-learn: Modelagem de Machine Learning
+  - matplotlib: Visualização de dados
+  - seaborn: Visualização de dados estatísticos
+  - imblearn: Para lidar com desbalanceamento de classes (SMOTE)
+  - joblib: Para salvar e carregar modelos
+  - python-dotenv: Para carregar variáveis de ambiente (se usar .env)
+- Jupyter Notebook: Para exploração e prototipagem
+- MongoDB (Local/Atlas): Para armazenamento de dados (conforme sua escolha)
+
+---
+
+## ⚙️ Configuração do Ambiente
+
+Siga estes passos para configurar o ambiente de desenvolvimento e executar o projeto:
+
+1. Clonar o Repositório:
+
+    ```bash
+    git clone https://github.com/seu_usuario/flood_prediction_project.git
+    cd flood_prediction_project
+    ```
+
+2. Criar e Ativar Ambiente Virtual:
+    É altamente recomendado usar um ambiente virtual para isolar as dependências do projeto.
+
+    ```bash
+    python3 -m venv .venv
+    # No macOS/Linux:
+    source .venv/bin/activate
+    # No Windows:
+    .venv\Scripts\activate
+    ```
+
+3. Instalar Dependências:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Configurar MongoDB (Local):
+    Se você optou por usar o MongoDB localmente:
+
+    - Instale o MongoDB Community Server: Siga as instruções de instalação para seu sistema operacional no site oficial do MongoDB.
+    - Inicie o servidor MongoDB: Garanta que o processo mongod esteja rodando (geralmente na porta 27017).
+
+5. Variáveis de Ambiente (Opcional, mas Recomendado):
+    Se você for usar credenciais ou caminhos sensíveis, crie um arquivo .env na raiz do projeto (o git o ignorará) e defina suas variáveis lá.
+    Exemplo de .env:
+
+    ```text
+    MONGO_URI="mongodb://localhost:27017/"
+    # Ou sua string do Atlas se decidir voltar:
+    # MONGO_URI="mongodb+srv://<username>:<password>@<cluster-url>/?retryWrites=true&w=majority"
+    ```
+
+---
+
+## 🚀 Como Executar o Projeto
+
+Você pode executar o projeto de duas maneiras:
+
+### A. Usando os Jupyter Notebooks (Para Exploração)
+
+Para entender cada etapa em detalhes e experimentar:
+
+1. Inicie o Jupyter Lab/Notebook:
+
+    ```bash
+    jupyter lab # ou jupyter notebook
+    ```
+
+2. Navegue até a pasta ```notebooks/```.
+3. Execute os notebooks em ordem numérica:
+    - 01_eda_and_initial_analysis.ipynb
+    - 02_feature_engineering_exploration.ipynb
+    - 03_model_experimentation.ipynb
+
+### B. Executando o Pipeline Completo (Para Reprodução e Testes)
+
+Uma vez que as etapas dos notebooks foram prototipadas, a lógica principal é refatorada para os scripts em src/ e orquestrada pelo run_pipeline.py.
+
+1. Certifique-se de que seu ambiente virtual está ativado.
+2. Execute o script principal:
+
+    ```bash
+    python run_pipeline.py
+    ```
+
+    Este script executará as etapas de carregamento de dados, pré-processamento, engenharia de features, treinamento do modelo e avaliação.
+
+---
+
+## 📊 Resultados e Análise
+
+Os resultados das análises, gráficos gerados e a performance do modelo final serão salvos na pasta ```reports/```.
+
+- ```reports/figures/```: Contém as visualizações (mapas de calor de correlação, gráficos de séries temporais, matrizes de confusão, curvas ROC/PR).
+- ```reports/model_performance_metrics.csv```: Um resumo das métricas de avaliação do modelo final.
+- ```reports/final_report.md```: Um relatório mais detalhado sobre a metodologia, achados e conclusões do projeto.

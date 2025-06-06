@@ -12,3 +12,4 @@ seaborn
 scikit-learn
 scipy
 imbalanced-learn
+platformio
