@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template_string
 from datetime import datetime
+from src.prediction_api import predict_flood
 
 app = Flask(__name__)
 
@@ -76,6 +77,7 @@ DASHBOARD_HTML = """
     </div>
 
     <script>
+        
         function updateDateTime() {
             const now = new Date();
             const options = {
@@ -132,7 +134,7 @@ DASHBOARD_HTML = """
 """
 
 @app.route('/')
-def dashboard():
+def dashboard():    
     """
     Renders the flood alert dashboard web page.
     """
