@@ -26,5 +26,5 @@ void loop() {
     Serial.println("ALERTA: Nível de água alto! Risco de enchente!");
   }
 
-  delay(1000); // Mede a cada 1 segundo
+  delay(5000); // Mede a cada 5 segundos
 }
