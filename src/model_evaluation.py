@@ -47,11 +47,11 @@ def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series, feature_names
     print("\n--- Classification Report ---")
     # The classification report provides precision, recall, f1-score, and support for each class.
     # For flood prediction, 'recall' for the positive class (flood) is often prioritized.
-    print(classification_report(y_test, y_pred, target_names=['No Flood', 'Flood']))
+    print(classification_report(y_test, y_pred, target_names=['No Flood', 'Flood'], labels=[0, 1]))
 
     # --- 2. Confusion Matrix ---
     print("\n--- Confusion Matrix ---")
-    cm = confusion_matrix(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred, labels=[0, 1])
     print(cm) # Raw confusion matrix array
 
     # Visualize the Confusion Matrix for better understanding

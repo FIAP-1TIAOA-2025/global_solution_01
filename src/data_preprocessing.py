@@ -295,4 +295,6 @@ def clean_and_engineer_features():
 
   print("\nDomain Knowledge Integration Summary:")
   print("A integração do conhecimento de domínio é um processo contínuo que enriquece o dataset, melhora a relevância das features e informa as escolhas do modelo e estratégias de avaliação. É a ponte entre os dados brutos e um modelo de IA verdadeiramente útil para prever inundações.")
+  daily_dataframe.set_index('date', inplace=True)
+  split_date = pd.to_datetime('2024-10-30').tz_localize('UTC')
   return daily_dataframe

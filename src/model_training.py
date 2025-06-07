@@ -38,7 +38,7 @@ def train_model(df_processed: pd.DataFrame):
     # Given data from 2023-04-30 to 2025-04-30 (2 years of data).
     # We'll use approximately the first 1.5 years for training and the last 0.5 year for testing.
     # This simulates predicting on unseen, future data.
-    split_date = pd.to_datetime('2024-10-30') # Cut-off date for train/test split
+    split_date = pd.to_datetime('2024-10-30').tz_localize('UTC') # Cut-off date for train/test split
 
     X_train = X[X.index < split_date]
     y_train = y[y.index < split_date]
