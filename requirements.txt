@@ -15,3 +15,5 @@ imbalanced-learn
 platformio
 Flask
 Flask-Cors
+serial
+pyserial
