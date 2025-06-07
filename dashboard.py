@@ -1,7 +1,6 @@
 # dashboard_app.py
 
-from flask import Flask, render_template_string
-from datetime import datetime
+from flask import Flask, render_template_string, jsonify
 from src.prediction_api import predict_flood
 
 app = Flask(__name__)
@@ -67,17 +66,16 @@ DASHBOARD_HTML = """
             <p class="text-xl font-semibold text-gray-700 mb-2">Possibilidade de Inundações:</p>
             <p id="flood-possibility" class="text-3xl font-extrabold"></p>
             <p class="text-sm text-gray-500 mt-2">
-                (Simulação: O risco se atualiza aleatoriamente a cada 5 segundos. Em um sistema real, seria baseado em dados e modelos de ML.)
+                (O risco é atualizado automaticamente a cada 5 segundos com base no modelo de ML.)
             </p>
         </div>
 
         <div class="text-sm text-gray-500 mt-4">
-            Última atualização da simulação: <span id="last-sim-update"></span>
+            Última atualização: <span id="last-sim-update"></span>
         </div>
     </div>
 
     <script>
-        
         function updateDateTime() {
             const now = new Date();
             const options = {
@@ -88,35 +86,50 @@ DASHBOARD_HTML = """
             document.getElementById('current-datetime').textContent = now.toLocaleDateString('pt-BR', options);
         }
 
-        const riskLevels = [
-            { text: "Risco Baixo", class: "low-risk" },
-            { text: "Risco Moderado", class: "moderate-risk" },
-            { text: "Risco Alto", class: "high-risk" },
-            { text: "RISCO CRÍTICO!", class: "critical-risk" }
-        ];
-
         function updateFloodPossibility() {
-            // In a real application, this would fetch data from your ML model API
-            // For this simulation, we'll pick a random risk level
-            const randomIndex = Math.floor(Math.random() * riskLevels.length);
-            const selectedRisk = riskLevels[randomIndex];
+            fetch('/api/flood-possibility')
+                .then(response => response.json())
+                .then(data => {
+                    let riskText = "Risco Baixo";
+                    let riskClass = "low-risk";
+                    if (data.error) {
+                        riskText = "Erro ao obter previsão";
+                        riskClass = "critical-risk";
+                    } else if (data.flood_risk) {
+                        if (data.probability >= 0.8) {
+                            riskText = "RISCO CRÍTICO!";
+                            riskClass = "critical-risk";
+                        } else if (data.probability >= 0.6) {
+                            riskText = "Risco Alto";
+                            riskClass = "high-risk";
+                        } else if (data.probability >= 0.3) {
+                            riskText = "Risco Moderado";
+                            riskClass = "moderate-risk";
+                        } else {
+                            riskText = "Risco Baixo";
+                            riskClass = "low-risk";
+                        }
+                    } else {
+                        riskText = "Risco Baixo";
+                        riskClass = "low-risk";
+                    }
 
-            const floodPossibilityElement = document.getElementById('flood-possibility');
-            const floodStatusCard = document.getElementById('flood-status-card');
-            const lastSimUpdateElement = document.getElementById('last-sim-update');
+                    const floodPossibilityElement = document.getElementById('flood-possibility');
+                    const floodStatusCard = document.getElementById('flood-status-card');
+                    const lastSimUpdateElement = document.getElementById('last-sim-update');
 
-            floodPossibilityElement.textContent = selectedRisk.text;
+                    floodPossibilityElement.textContent = riskText + (data.probability !== null && data.probability !== undefined ? ` (${(data.probability*100).toFixed(1)}%)` : "");
+                    floodStatusCard.classList.remove("low-risk", "moderate-risk", "high-risk", "critical-risk");
+                    floodStatusCard.classList.add(riskClass);
 
-            // Remove all existing risk classes
-            riskLevels.forEach(level => floodStatusCard.classList.remove(level.class));
-            
-            // Add the selected risk class
-            floodStatusCard.classList.add(selectedRisk.class);
-
-            // Update simulation timestamp
-            const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            lastSimUpdateElement.textContent = now.toLocaleTimeString('pt-BR', options);
+                    const now = new Date();
+                    const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+                    lastSimUpdateElement.textContent = now.toLocaleTimeString('pt-BR', options);
+                })
+                .catch(() => {
+                    document.getElementById('flood-possibility').textContent = "Erro ao obter previsão";
+                    document.getElementById('flood-status-card').classList.add("critical-risk");
+                });
         }
 
         // Update date/time every second
@@ -139,6 +152,18 @@ def dashboard():
     Renders the flood alert dashboard web page.
     """
     return render_template_string(DASHBOARD_HTML)
+
+@app.route('/api/flood-possibility')
+def api_flood_possibility():
+    try:
+        prediction, probability = predict_flood()
+        result = {
+            "flood_risk": bool(prediction),
+            "probability": float(probability) if probability is not None else None
+        }
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     # To run the Flask app:
