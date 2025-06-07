@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template_string, jsonify
 from src.prediction_api import predict_flood
+from read_serial import flood_sensor
 
 app = Flask(__name__)
 
@@ -156,6 +157,12 @@ def dashboard():
 @app.route('/api/flood-possibility')
 def api_flood_possibility():
     try:
+        flood_sensor_status = flood_sensor()
+        print(f"Flood sensor status: {flood_sensor_status}")
+        if flood_sensor_status:
+            # If flood sensor detects an alert, return its status immediately
+            print(f"Flood sensor alert detected: {flood_sensor_status}")
+            return jsonify(flood_sensor_status)
         prediction, probability = predict_flood()
         result = {
             "flood_risk": bool(prediction),
@@ -170,7 +177,7 @@ if __name__ == '__main__':
     # 1. Save this code as dashboard_app.py
     # 2. Open your terminal in the same directory as the file.
     # 3. Run: python dashboard_app.py
-    # 4. Open your browser and go to http://127.0.0.1:5000/
+    # 4. Open your browser and go to http://127.0.0.1:3000/
 
     # For a production environment, use a WSGI server like Gunicorn or uWSGI.
     # For development, debug=True provides useful error messages and auto-reloads.
