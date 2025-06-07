@@ -42,17 +42,20 @@ flood_prediction_project/
 │
 ├── models/
 │   ├── trained_models/      # Modelos treinados e scalers salvos
-│   └── checkpoints/         # Saves intermediários de modelos (se aplicável)
+│   └── checkpoints/         # Saves intermediários de modelos (aplicação futura)
 │
 ├── reports/
 │   ├── figures/             # Gráficos e visualizações gerados
 │   ├── final_report.md      # Relatório final do projeto
 │   └── model_performance_metrics.csv # Métricas de performance do modelo final
 │
-├── .env                     # Variáveis de ambiente (ex: credenciais, *NÃO comitar!*)
+├── .env                     # Variáveis de ambiente (aplicação futura)
 ├── requirements.txt         # Lista de dependências Python
 ├── README.md                # Este arquivo
-└── run_pipeline.py          # Script principal para executar o pipeline completo
+├── desastres.json           # lista dos desastres cadastrados (aplicação futura)
+├── dashboard.py             # Gera uma dashboard para exibir os alertas
+├── diagram.json             # Simula placa ESP32 com sensor (extensão wokwi com vscode necessária)
+└── run_pipeline.py          # Script principal para executar o pipeline completo (treinamento ML)
 ```
 
 ---
@@ -71,6 +74,7 @@ flood_prediction_project/
   - python-dotenv: Para carregar variáveis de ambiente (se usar .env)
 - Jupyter Notebook: Para exploração e prototipagem
 - MongoDB (Local/Atlas): Para armazenamento de dados (conforme sua escolha)
+- Wokwi para simular placa ESP32 e um sensor
 
 ---
 
@@ -162,3 +166,13 @@ Os resultados das análises, gráficos gerados e a performance do modelo final s
 - ```reports/figures/```: Contém as visualizações (mapas de calor de correlação, gráficos de séries temporais, matrizes de confusão, curvas ROC/PR).
 - ```reports/model_performance_metrics.csv```: Um resumo das métricas de avaliação do modelo final.
 - ```reports/final_report.md```: Um relatório mais detalhado sobre a metodologia, achados e conclusões do projeto.
+
+---
+
+## Exibição da Dashboard
+
+Execute o comando:
+
+```bash
+python dashboard.py
+```

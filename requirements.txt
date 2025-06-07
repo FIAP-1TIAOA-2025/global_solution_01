@@ -13,3 +13,5 @@ scikit-learn
 scipy
 imbalanced-learn
 platformio
+Flask
+Flask-Cors
