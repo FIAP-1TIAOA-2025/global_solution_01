@@ -1,0 +1,50 @@
+Flood in Brazil
+A storm hit the Rio Grande do Sul state in Brazil on 29 April.
+Torrential rains poured down across 76 cities, resulting in mass flooding. 5 deaths were reported, many injured and 18 people missing. Nearly 100 residents were forced to evacuate their homes, and an additional 200 sought refuge in shelters.
+Heavy rains lead to the Barramansa River bursting its banks and flooding local roads, the overflowed water collided with a bridge's foundations and completely detached it from the road.
+Type of event
+Flood
+Location of event
+Brazil
+Date of Charter Activation
+2024-04-30
+Time of Charter Activation
+20:37
+Time zone of Charter Activation
+UTC-03:00
+Charter Requestor
+CENAD
+Activation ID
+875
+Project Management
+Artur Matos (SGB - Serviço Geológico Brasileiro)
+Value Adding
+Alisson deOliveira (INPE),
+Julio Cesar Lana (SGB),
+Laercio Massaru Namikawa (INPE),
+Camila Gonçalves dos Santos (UFRRJ),
+Mailson Moura (CENSIPAM),
+Ulisses Guimarães (CENSIPAM),
+Copernicus EMS,
+UFRGS,
+Igor Lisboa (CENSIPAM),
+DianaArlette CorderoDevesa (CENAPRED),
+Luna Alves (Serviço Geológico Brasileiro - SGB),
+Manoel Araújo Sousa Júnior (Federal University of Santa Maria),
+Silvia Pardi LaCruz (Federal University of Santa Maria),
+Sidnei Gass (UNIPAMPA),
+Giovanna  Albuquerque (CENSIPAM),
+Brenda Rocha (INPE),
+ANA,
+Mariana MarquesWolf (INPE),
+Alexandre Junqueira Homem de Mello (INPE),
+Thales Korting (INPE),
+Helena Boscolo (INPE),
+NOAA VA (NOAA)
+Zoom in
+Zoom out
+Center map
+›
+©
+OpenStreetMap
+contributors.

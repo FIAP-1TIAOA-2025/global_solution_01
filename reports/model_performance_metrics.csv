@@ -1,0 +1,7 @@
+metric,value
+Accuracy,1.0
+Precision_Flood,0.0
+Recall_Flood,0.0
+F1_Flood,0.0
+ROC_AUC,
+PR_AUC,0.5
